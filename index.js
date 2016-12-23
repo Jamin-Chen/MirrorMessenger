@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 app.listen((process.env.PORT || 3000));
 
 app.get('/', function (request, response) {
-    response.send('Hello Dum.');
+    response.send('dum is so piao liang.');
 });
 
 app.get('/webhook', function (request, response) {
