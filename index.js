@@ -26,7 +26,8 @@ app.post('/webhook', function (req, res) {
         var event = events[i];
         if (event.message && event.message.text) {
             sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
-        } else if (event.message && event.message.text == 'cat') {
+        }
+        if (event.message && event.message.text == 'panda') {
             sendMessage(event.sender.id, {
                 attachment: {
                     type: image,
