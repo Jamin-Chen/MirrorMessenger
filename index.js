@@ -27,16 +27,6 @@ app.post('/webhook', function (req, res) {
         if (event.message && event.message.text) {
             sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
         }
-        if (event.message && event.message.text == 'panda') {
-            sendMessage(event.sender.id, {
-                attachment: {
-                    type: image,
-                    payload: {
-                        url: "https://imgur.com/a/Bv4HP"
-                    }
-                }
-            })
-        }
     }
     res.sendStatus(200);
 });
