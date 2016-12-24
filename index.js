@@ -9,8 +9,8 @@ app.use(bodyParser.json());
 app.listen((process.env.PORT || 3000));
 
 bot = new cleverbot("vHyQyWFeYORet3OW", "nBx58uR78n2earRCalcjrRYfA75B5yTb");
-
-bot.create(function(err, session) {});
+bot.setNick("sessionname");
+bot.create(function(err, "sessionname") {});
 
 app.get('/', function (request, response) {
     response.send('dum is so piao liang.');
