@@ -10,7 +10,7 @@ app.listen((process.env.PORT || 3000));
 
 bot = new cleverbot("vHyQyWFeYORet3OW", "nBx58uR78n2earRCalcjrRYfA75B5yTb");
 bot.setNick("sessionname");
-bot.create(function(err, "sessionname") {});
+bot.create(function(err, session) {});
 
 app.get('/', function (request, response) {
     response.send('dum is so piao liang.');
