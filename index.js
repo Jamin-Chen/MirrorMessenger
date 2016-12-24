@@ -26,10 +26,9 @@ app.post('/webhook', function (const module = require('module');, res) {
         var event = events[i];
         if (event.message && event.message.text) {
             sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
-        }
-        if (event.message && event.message.text == 'cat') {
+        } else if (event.message && event.message.text == 'cat') {
             sendMessage(event.sender.id, {
-                attachement: {
+                attachment: {
                     type: image,
                     payload: {
                         url: "http://www.telegraph.co.uk/content/dam/news/2016/08/23/106598324PandawaveNEWS-large_trans++eo_i_u9APj8RuoebjoAHt0k9u7HhRJvuo-ZLenGRumA.jpg"
