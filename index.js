@@ -20,12 +20,22 @@ app.get('/webhook', function (request, response) {
 });
 
 // handler receiving messages
-app.post('/webhook', function (req, res) {
+app.post('/webhook', function (const module = require('module');, res) {
     var events = req.body.entry[0].messaging;
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
             sendMessage(event.sender.id, {text: "Echo: " + event.message.text});
+        }
+        if (event.message && event.message.text == 'cat') {
+            sendMessage(event.sender.id, {
+                attachement: {
+                    type: image,
+                    payload: {
+                        url: "http://www.telegraph.co.uk/content/dam/news/2016/08/23/106598324PandawaveNEWS-large_trans++eo_i_u9APj8RuoebjoAHt0k9u7HhRJvuo-ZLenGRumA.jpg"
+                    }
+                }
+            })
         }
     }
     res.sendStatus(200);
