@@ -32,7 +32,7 @@ app.post('/webhook', function (req, res) {
                 attachment: {
                     type: image,
                     payload: {
-                        url: "http://www.telegraph.co.uk/content/dam/news/2016/08/23/106598324PandawaveNEWS-large_trans++eo_i_u9APj8RuoebjoAHt0k9u7HhRJvuo-ZLenGRumA.jpg"
+                        url: "https://imgur.com/a/Bv4HP"
                     }
                 }
             })
