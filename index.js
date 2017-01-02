@@ -31,7 +31,6 @@ app.post('/webhook', function (req, res) {
         var event = events[i];
         if (event.message && event.message.text) {
             sendMessage(event.sender.id, {
-                {
                     "text":"Pick a color:",
                     "quick_replies":[
                       {
@@ -45,7 +44,6 @@ app.post('/webhook', function (req, res) {
                         "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
                       }
                     ]
-                  }
             });
         }
     }
