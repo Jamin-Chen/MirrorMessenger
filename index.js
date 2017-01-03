@@ -45,6 +45,7 @@ app.post('/webhook', function (req, res) {
                       }
                     ]
             });
+            console.log(event.postback);
         }
     }
     res.sendStatus(200);
