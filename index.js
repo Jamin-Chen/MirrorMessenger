@@ -31,7 +31,8 @@ app.post('/webhook', function (req, res) {
                       {
                         "content_type":"text",
                         "title":"Set a reminder",
-                        "postback":{
+                        "payload":{
+                          "type":"postback",
                           "payload":"DEVELOPER_DEFINED_PAYLOAD_1",
                         }
                       },
