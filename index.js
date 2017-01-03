@@ -31,17 +31,17 @@ app.post('/webhook', function (req, res) {
                       {
                         "content_type":"text",
                         "title":"Set a reminder",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_1"
+                        "payload":"DEVELOPER_DEFINED_PAYLOAD_1",
                       },
                       {
                         "content_type":"text",
                         "title":"Send a message",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_2"
+                        "payload":"DEVELOPER_DEFINED_PAYLOAD_2",
                       },
                       {
                         "content_type":"text",
                         "title":"Change mirror location",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_3"
+                        "payload":"DEVELOPER_DEFINED_PAYLOAD_3",
                       }
                     ]
             });
