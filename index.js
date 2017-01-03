@@ -29,17 +29,17 @@ app.post('/webhook', function (req, res) {
                     "text":"What would you like to do?",
                     "quick_replies":[
                       {
-                        "content_type":"text",
+                        "content_type":"postback",
                         "title":"Set a reminder",
                         "payload":"DEVELOPER_DEFINED_PAYLOAD_1",
                       },
                       {
-                        "content_type":"text",
+                        "content_type":"postback",
                         "title":"Send a message",
                         "payload":"DEVELOPER_DEFINED_PAYLOAD_2",
                       },
                       {
-                        "content_type":"text",
+                        "content_type":"postback",
                         "title":"Change mirror location",
                         "payload":"DEVELOPER_DEFINED_PAYLOAD_3",
                       }
