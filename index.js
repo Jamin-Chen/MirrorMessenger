@@ -1,19 +1,14 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     request = require('request'),
-    cleverbot = require('cleverbot.io');
 var app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 3000));
 
-bot = new cleverbot("vHyQyWFeYORet3OW", "nBx58uR78n2earRCalcjrRYfA75B5yTb");
-bot.setNick("sessionname");
-bot.create(function(err, session) {});
-
 app.get('/', function (request, response) {
-    response.send('dum is so piao liang.');
+    response.send('This is the Raspberry Pi Messenger Bot.');
 });
 
 app.get('/webhook', function (request, response) {
@@ -31,17 +26,22 @@ app.post('/webhook', function (req, res) {
         var event = events[i];
         if (event.message && event.message.text) {
             sendMessage(event.sender.id, {
-                    "text":"Pick a color:",
+                    "text":"What would you like to do?",
                     "quick_replies":[
                       {
                         "content_type":"text",
-                        "title":"Red",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED"
+                        "title":"Set a reminder",
+                        "payload":"DEVELOPER_DEFINED_PAYLOAD_1"
                       },
                       {
                         "content_type":"text",
-                        "title":"Green",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_GREEN"
+                        "title":"Send a message",
+                        "payload":"DEVELOPER_DEFINED_PAYLOAD_2"
+                      },
+                      {
+                        "content_type":"text",
+                        "title":"Change mirror location",
+                        "payload":"DEVELOPER_DEFINED_PAYLOAD_3"
                       }
                     ]
             });
