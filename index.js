@@ -25,27 +25,18 @@ app.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-            sendMessage(event.sender.id, {
-                    "text":"What would you like to do?",
-                    "quick_replies":[
-                      {
-                        "content_type":"text",
-                        "title":"Set a reminder",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_1",
-                      },
-                      {
-                        "content_type":"text",
-                        "title":"Send a message",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_2",
-                      },
-                      {
-                        "content_type":"text",
-                        "title":"Change mirror location",
-                        "payload":"DEVELOPER_DEFINED_PAYLOAD_3",
-                      }
-                    ]
-            });
+            switch (event.message.text) {
+                case "Set a reminder":
+                    sendMessage(event.sender.id, {text: "Will set reminder!"});
+                case "Send a message":
+                    sendMessage(event.sender.id, {text: "Will send message!"});
+                case "Change location":
+                    sendMessage(event.sender.id, {text: "Will change location!"});
+                default:
+                    sendDefaultMessage(event);
+            }
         } else if (event.postback) {
+            // code to handle postbacks, doesn't work rn
             console.log("postback:");
             console.log(JSON.stringify(event.postback.payload));
         }
@@ -71,3 +62,26 @@ function sendMessage(recipientId, message) {
         }
     });
 };
+
+function sendDefaultMessage(event) {
+    sendMessage(event.sender.id, {
+        "text":"What would you like to do?",
+        "quick_replies":[
+          {
+            "content_type":"text",
+            "title":"Set a reminder",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_1",
+          },
+          {
+            "content_type":"text",
+            "title":"Send a message",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_2",
+          },
+          {
+            "content_type":"text",
+            "title":"Change location",
+            "payload":"DEVELOPER_DEFINED_PAYLOAD_3",
+          }
+        ]
+    });
+}
