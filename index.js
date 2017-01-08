@@ -45,7 +45,8 @@ app.post('/webhook', function (req, res) {
                       }
                     ]
             });
-        } else if (event.postback && event.postback.payload) {
+        } else if (event.postback) {
+            console.log("postback:");
             console.log(JSON.stringify(event.postback.payload));
         }
     }
