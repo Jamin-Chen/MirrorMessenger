@@ -28,10 +28,13 @@ app.post('/webhook', function (req, res) {
             switch (event.message.text) {
                 case "Set a reminder":
                     sendMessage(event.sender.id, {text: "Will set reminder!"});
+                    break;
                 case "Send a message":
                     sendMessage(event.sender.id, {text: "Will send message!"});
+                    break;
                 case "Change location":
                     sendMessage(event.sender.id, {text: "Will change location!"});
+                    break;
                 default:
                     sendDefaultMessage(event);
             }
