@@ -25,19 +25,7 @@ app.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-            switch (event.message.text) {
-                case "Set a reminder":
-                    sendMessage(event.sender.id, {text: "Will set reminder!"});
-                    break;
-                case "Send a message":
-                    sendMessage(event.sender.id, {text: "Will send message!"});
-                    break;
-                case "Change location":
-                    sendMessage(event.sender.id, {text: "Will change location!"});
-                    break;
-                default:
-                    sendDefaultMessage(event);
-            }
+            sendDefaultMessage(event.sender.id);
         } else if (event.postback) {
             // code to handle postbacks, doesn't work rn
             console.log("postback:");
@@ -66,25 +54,30 @@ function sendMessage(recipientId, message) {
     });
 };
 
-function sendDefaultMessage(event) {
-    sendMessage(event.sender.id, {
-        "text":"What would you like to do?",
-        "quick_replies":[
-          {
-            "content_type":"text",
-            "title":"Set a reminder",
-            "payload":"DEVELOPER_DEFINED_PAYLOAD_1",
-          },
-          {
-            "content_type":"text",
-            "title":"Send a message",
-            "payload":"DEVELOPER_DEFINED_PAYLOAD_2",
-          },
-          {
-            "content_type":"text",
-            "title":"Change location",
-            "payload":"DEVELOPER_DEFINED_PAYLOAD_3",
+function sendTextMessage(recipientId, text) {
+    sendMessage(recipientId, {text:text});
+};
+
+function sendDefaultMessage(recipientId) {
+    sendMessage(recipientId, {
+        "attachment":{
+              "type":"template",
+              "payload":{
+                "template_type":"button",
+                "text":"What do you want to do?",
+                "buttons":[
+                  {
+                    "type":"postback",
+                    "title":"Send a message",
+                    "payload":"test_payload"
+                  },
+                  {
+                    "type":"postback",
+                    "title":"Change location",
+                    "payload":"USER_DEFINED_PAYLOAD"
+                  }
+                ]
+              }
           }
-        ]
-    });
-}
+        });
+};
