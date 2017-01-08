@@ -29,7 +29,7 @@ app.post('/webhook', function (req, res) {
         } else if (event.postback) {
             // code to handle postbacks, doesn't work rn
             console.log("postback:");
-            console.log(JSON.stringify(event.postback.payload));
+            console.log(event.postback.payload);
         }
     }
     res.sendStatus(200);
