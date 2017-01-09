@@ -55,15 +55,15 @@ app.post('/webhook', function (req, res) {
                     userState[sender] = 0;
                     break;
                 case 0:
-                    sendTextMessage(sender, "Hello, nice to meet you! :)");
                     sendDefaultMessage(sender);
                     break;
                 default:
+                    sendTextMessage(sender, "Hello, nice to meet you! :)");
                     sendDefaultMessage(sender);
             }
-        }
-        if (event.postback) {
+        } else if (event.postback) {
             payload = JSON.stringify(event.postback.payload);
+            console.log("payload");
             switch (payload) {
                 case "Send Message":
                     console.log("payload");
