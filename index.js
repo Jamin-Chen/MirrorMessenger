@@ -64,6 +64,7 @@ app.post('/webhook', function (req, res) {
         } else if (event.postback) {
             payload = JSON.stringify(event.postback.payload);
             payload = payload.trim();
+            console.log(typeof(payload));
             if (payload == "Send Message") {
                 console.log("payload");
                 sendTextMessage(sender, "What message would you like to send?");
