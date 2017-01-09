@@ -62,11 +62,6 @@ app.post('/webhook', function (req, res) {
             payload = payload.trim();
             payload = payload.slice(1, -1);
             switch (payload) {
-                case "Send Message":
-                    console.log("payload");
-                    sendTextMessage(sender, "What message would you like to send?");
-                    userState[sender] = 1.1;
-                    break;
                 case "Change Location":
                     promptLocation(sender);
                     userState[sender] = 2.1;
@@ -77,6 +72,8 @@ app.post('/webhook', function (req, res) {
                     break;
                 case "No 1.1":
                     sendTextMessage(sender, "Whoops, let's try again!");
+                case "Send Message":
+                    console.log("payload");
                     sendTextMessage(sender, "What message would you like to send?");
                     userState[sender] = 1.1;
                     break;
