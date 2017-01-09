@@ -65,6 +65,7 @@ app.post('/webhook', function (req, res) {
             payload = JSON.stringify(event.postback.payload);
             payload = payload.trim();
             console.log(payload);
+            if (payload === "Send Message") console.log ("true");
             switch (payload) {
                 case "Send Message":
                     console.log("payload");
