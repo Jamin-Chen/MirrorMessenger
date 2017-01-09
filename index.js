@@ -62,7 +62,7 @@ app.post('/webhook', function (req, res) {
                     sendDefaultMessage(sender);
             }
         } else if (event.postback) {
-            console.log("postback");
+            console.log(JSON.stringify(event.postback.payload));
             switch (JSON.stringify(event.postback.payload)) {
                 case "Send Message":
                     sendTextMessage("What message would you like to send?");
