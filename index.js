@@ -37,11 +37,11 @@ app.post('/webhook', function (req, res) {
             switch (userState[sender]) {
                 case 1.1:
                     var messageText = text;
-                    sendTextMessage("To confirm, is this your message?");
+                    sendTextMessage(sender, "To confirm, is this your message?");
                     sendTextConfirm(sender, messageText);
                     break;
                 case 1.2:
-                    sendTextMessage("Great, I'll send it now!");
+                    sendTextMessage(sender, "Great, I'll send it now!");
                     userState[sender] = 0;
                     break;
                 case 2.1:
@@ -55,7 +55,7 @@ app.post('/webhook', function (req, res) {
                     userState[sender] = 0;
                     break;
                 case 0:
-                    sendTextMessage("Hello, nice to meet you! :)");
+                    sendTextMessage(sender, "Hello, nice to meet you! :)");
                     sendDefaultMessage(sender);
                     break;
                 default:
@@ -65,7 +65,7 @@ app.post('/webhook', function (req, res) {
             payload = JSON.stringify(event.postback.payload);
             switch (payload) {
                 case "Send Message":
-                    sendTextMessage("What message would you like to send?");
+                    sendTextMessage(sender, "What message would you like to send?");
                     userState[sender] = 1.1;
                     break;
                 case "Change Location":
@@ -76,7 +76,7 @@ app.post('/webhook', function (req, res) {
                     userState[sender] = 1.2;
                     break;
                 case "No 1.1":
-                    sendTextMessage("Whoops, let's try again!");
+                    sendTextMessage(sender, "Whoops, let's try again!");
                     userState[sender] = 1;
             }
         }
