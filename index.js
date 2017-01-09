@@ -64,25 +64,18 @@ app.post('/webhook', function (req, res) {
         } else if (event.postback) {
             payload = JSON.stringify(event.postback.payload);
             payload = payload.trim();
-            console.log(payload);
-            if (payload === "Send Message") console.log ("true");
-            switch (payload) {
-                case "Send Message":
-                    console.log("payload");
-                    sendTextMessage(sender, "What message would you like to send?");
-                    userState[sender] = 1.1;
-                    break;
-                case "Change Location":
-                    promptLocation(sender);
-                    userState[sender] = 2.1;
-                    break;
-                case "Yes 1.1":
-                    userState[sender] = 1.2;
-                    break;
-                case "No 1.1":
-                    sendTextMessage(sender, "Whoops, let's try again!");
-                    userState[sender] = 1;
-                    break;
+            if (payload == "Send Message") {
+                console.log("payload");
+                sendTextMessage(sender, "What message would you like to send?");
+                userState[sender] = 1.1;
+            } else if (payload == "Change Location") {
+                promptLocation(sender);
+                userState[sender] = 2.1;
+            } else if (payload == "Yes 1.1") {
+                userState[sender] = 1.2;
+            } else if (payload == "No 1.1") {
+                sendTextMessage(sender, "Whoops, let's try again!");
+                userState[sender] = 1;
             }
         }
     }
