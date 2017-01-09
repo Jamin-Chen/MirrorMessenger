@@ -64,6 +64,7 @@ app.post('/webhook', function (req, res) {
         } else if (event.postback) {
             payload = JSON.stringify(event.postback.payload);
             payload = payload.trim();
+            payload = payload.slice(1, -1);
             console.log(typeof(payload));
             console.log(payload);
             if (payload == "SEND_MESSAGE") {
