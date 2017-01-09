@@ -3,6 +3,8 @@ var express = require('express'),
     request = require('request');
 var app = express();
 
+var userState = {};
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 3000));
@@ -23,13 +25,61 @@ app.get('/webhook', function (request, response) {
 app.post('/webhook', function (req, res) {
     var events = req.body.entry[0].messaging;
     for (i = 0; i < events.length; i++) {
-        var event = events[i];
+        let event = events[i];
+        let sender = event.sender.id;
         if (event.message && event.message.text) {
-            sendDefaultMessage(event.sender.id);
+            let text = event.message.text;
+            switch (text) {
+                case "reset":
+                    userState[Sender] = 0;
+                    break;
+            }
+            switch (userState[Sender]) {
+                case 1:
+                    sendTextMessage("What message would you like to send?");
+                    userState[Sender] = 1.1;
+                    break;
+                case 1.1:
+                    var messageText = text;
+                    sendTextMessage("To confirm, is this your message?");
+                    sendTextConfirm(sender, messageText);
+                    break;
+                case 1.2:
+                    sendTextMessage("Great, I'll send it now!");
+                    userState[sender] = 0;
+                    break;
+                case 2:
+                    promptLocation(sender);
+                    userState[sender] = 2.1;
+                    break;
+                case 2.1:
+                    lat = event.message.attachments[0].payload.coordinates.lat;
+                    lng = event.message.attachments[0].payload.coordinates.long;
+                    console.log("latitude: " + lat);
+                    console.log("longitude: " + long);
+                    if (lat && long) {
+                        sendTextMessage(sender, "Great, I'll change it now!");
+                    }
+                    userState[sender] = 0;
+                case 0:
+                default:
+                    sendDefaultMessage(sender);
+            }
         } else if (event.postback) {
-            // code to handle postbacks, doesn't work rn
-            console.log("postback:");
-            console.log(event.postback.payload);
+            switch (JSON.stringify(event.postback.payload)) {
+                case "Send Message":
+                    userState[Sender] = 1;
+                    break;
+                case "Change Location":
+                    userState[Sender] = 2;
+                    break;
+                case "Yes 1.1":
+                    userState[Sender] = 1.2;
+                    break;
+                case "No 1.1":
+                    sendTextMessage("Whoops, let's try again!");
+                    userState[Sender] = 1;
+            }
         }
     }
     res.sendStatus(200);
@@ -64,20 +114,55 @@ function sendDefaultMessage(recipientId) {
               "type":"template",
               "payload":{
                 "template_type":"button",
-                "text":"What do you want to do?",
+                "text":"hi! What do you want to do?",
                 "buttons":[
                   {
                     "type":"postback",
                     "title":"Send a message",
-                    "payload":"test_payload"
+                    "payload":"Send Message"
                   },
                   {
                     "type":"postback",
                     "title":"Change location",
-                    "payload":"USER_DEFINED_PAYLOAD"
+                    "payload":"Change Location"
                   }
                 ]
               }
           }
         });
+};
+
+function sendTextConfirm(recipientId, messageText) {
+    sendMessage(recipientId, {
+        "attachment":{
+              "type":"template",
+              "payload":{
+                "template_type":"button",
+                "text": messageText,
+                "buttons":[
+                  {
+                    "type":"postback",
+                    "title":"Yes",
+                    "payload":"Yes 1.1"
+                  },
+                  {
+                    "type":"postback",
+                    "title":"No",
+                    "payload":"No 1.1"
+                  }
+                ]
+              }
+          }
+        });
+};
+
+function promptLocation(recipientId) {
+    sendMessage(recipientId, {
+        "text":"Where would you like to set the new location?:",
+        "quick_replies":[
+          {
+            "content_type":"location",
+          }
+        ]
+    });
 };
