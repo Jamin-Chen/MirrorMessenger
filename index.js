@@ -78,6 +78,7 @@ app.post('/webhook', function (req, res) {
                 sendTextMessage(sender, "Whoops, let's try again!");
                 userState[sender] = 1;
             }
+            console.log("no matches");
         }
     }
     res.sendStatus(200);
