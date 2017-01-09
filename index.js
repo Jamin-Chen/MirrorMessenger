@@ -66,7 +66,7 @@ app.post('/webhook', function (req, res) {
             payload = payload.trim();
             console.log(typeof(payload));
             console.log(payload);
-            if (payload == 'Send Message') {
+            if (payload == "SEND_MESSAGE") {
                 console.log("payload");
                 sendTextMessage(sender, "What message would you like to send?");
                 userState[sender] = 1.1;
@@ -119,12 +119,12 @@ function sendDefaultMessage(recipientId) {
                   {
                     "type":"postback",
                     "title":"Send a message",
-                    "payload":SEND_MESSAGE
+                    "payload":"SEND_MESSAGE",
                   },
                   {
                     "type":"postback",
                     "title":"Change location",
-                    "payload":CHANGE_LOCATION
+                    "payload":"CHANGE_LOCATION",
                   }
                 ]
               }
