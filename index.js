@@ -69,8 +69,8 @@ app.post('/webhook', function (req, res) {
                     userState[sender] = 1.1;
                     break;
                 case "Change Location":
-                    promptLocation(sender);
                     userState[sender] = 2.1;
+                    promptLocation(sender);
                     break;
                 case "Yes 1.1":
                     sendTextMessage(sender, "Great, I'll send it now!");
@@ -159,7 +159,7 @@ function sendTextConfirm(recipientId, messageText) {
 
 function promptLocation(recipientId) {
     sendMessage(recipientId, {
-        "text":"Where would you like to set the new location?:",
+        "text":"Where would you like to set the new location?",
         "quick_replies":[
           {
             "content_type":"location",
