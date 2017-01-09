@@ -65,6 +65,7 @@ app.post('/webhook', function (req, res) {
             payload = JSON.stringify(event.postback.payload);
             switch (payload) {
                 case "Send Message":
+                    console.log("trigger");
                     sendTextMessage(sender, "What message would you like to send?");
                     userState[sender] = 1.1;
                     break;
