@@ -70,6 +70,7 @@ app.post('/webhook', function (req, res) {
                     sendDefaultMessage(sender);
             }
         } else if (event.postback) {
+            console.log("postback");
             switch (JSON.stringify(event.postback.payload)) {
                 case "Send Message":
                     userState[sender] = 1;
