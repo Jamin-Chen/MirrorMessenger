@@ -65,22 +65,22 @@ app.post('/webhook', function (req, res) {
             payload = JSON.stringify(event.postback.payload);
             payload = payload.trim();
             payload = payload.slice(1, -1);
-            console.log(typeof(payload));
-            console.log(payload);
-            if (payload === "SEND_MESSAGE") {
+            case "Send Message":
                 console.log("payload");
                 sendTextMessage(sender, "What message would you like to send?");
                 userState[sender] = 1.1;
-            } else if (payload == "Change Location") {
+                break;
+            case "Change Location":
                 promptLocation(sender);
                 userState[sender] = 2.1;
-            } else if (payload == "Yes 1.1") {
+                break;
+            case "Yes 1.1":
                 userState[sender] = 1.2;
-            } else if (payload == "No 1.1") {
+                break;
+            case "No 1.1":
                 sendTextMessage(sender, "Whoops, let's try again!");
                 userState[sender] = 1;
-            }
-            console.log("no matches");
+                break;
         }
     }
     res.sendStatus(200);
@@ -120,12 +120,12 @@ function sendDefaultMessage(recipientId) {
                   {
                     "type":"postback",
                     "title":"Send a message",
-                    "payload":"SEND_MESSAGE",
+                    "payload":"Send Message"
                   },
                   {
                     "type":"postback",
                     "title":"Change location",
-                    "payload":"CHANGE_LOCATION",
+                    "payload":"Change Location"
                   }
                 ]
               }
