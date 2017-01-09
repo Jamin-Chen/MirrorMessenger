@@ -41,7 +41,7 @@ app.post('/webhook', function (req, res) {
                     sendTextConfirm(sender, messageText);
                     break;
                 case 2.1:
-                    console.log("here");
+                    console.log("here" + event.message.text);
                     lat = event.message.attachments.payload.coordinates.lat;
                     lng = event.message.attachments.payload.coordinates.long;
                     console.log(lat);
