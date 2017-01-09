@@ -40,10 +40,6 @@ app.post('/webhook', function (req, res) {
                     sendTextMessage(sender, "To confirm, is this your message?");
                     sendTextConfirm(sender, messageText);
                     break;
-                case 1.2:
-                    sendTextMessage(sender, "Great, I'll send it now!");
-                    userState[sender] = 0;
-                    break;
                 case 2.1:
                     lat = event.message.attachments[0].payload.coordinates.lat;
                     lng = event.message.attachments[0].payload.coordinates.long;
@@ -76,11 +72,13 @@ app.post('/webhook', function (req, res) {
                     userState[sender] = 2.1;
                     break;
                 case "Yes 1.1":
-                    userState[sender] = 1.2;
+                    sendTextMessage(sender, "Great, I'll send it now!");
+                    userState[sender] = 0;
                     break;
                 case "No 1.1":
                     sendTextMessage(sender, "Whoops, let's try again!");
-                    userState[sender] = 1;
+                    sendTextMessage(sender, "What message would you like to send?");
+                    userState[sender] = 1.1;
                     break;
             }
         }
