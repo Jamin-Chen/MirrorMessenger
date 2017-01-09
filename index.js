@@ -67,7 +67,7 @@ app.post('/webhook', function (req, res) {
             payload = payload.slice(1, -1);
             console.log(typeof(payload));
             console.log(payload);
-            if (payload == "SEND_MESSAGE") {
+            if (payload === "SEND_MESSAGE") {
                 console.log("payload");
                 sendTextMessage(sender, "What message would you like to send?");
                 userState[sender] = 1.1;
