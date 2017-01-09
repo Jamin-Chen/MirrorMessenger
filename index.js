@@ -119,12 +119,12 @@ function sendDefaultMessage(recipientId) {
                   {
                     "type":"postback",
                     "title":"Send a message",
-                    "payload":"Send Message"
+                    "payload":SEND_MESSAGE
                   },
                   {
                     "type":"postback",
                     "title":"Change location",
-                    "payload":"Change Location"
+                    "payload":CHANGE_LOCATION
                   }
                 ]
               }
