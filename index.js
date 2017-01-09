@@ -61,7 +61,11 @@ app.post('/webhook', function (req, res) {
                         sendTextMessage(sender, "Great, I'll change it now!");
                     }
                     userState[sender] = 0;
+                    break;
                 case 0:
+                    sendTextMessage("Hello, nice to meet you! :)");
+                    sendDefaultMessage(sender);
+                    break;
                 default:
                     sendDefaultMessage(sender);
             }
@@ -114,7 +118,7 @@ function sendDefaultMessage(recipientId) {
               "type":"template",
               "payload":{
                 "template_type":"button",
-                "text":"hi! What do you want to do?",
+                "text":"What do you want to do?",
                 "buttons":[
                   {
                     "type":"postback",
