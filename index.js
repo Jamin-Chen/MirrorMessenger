@@ -35,10 +35,6 @@ app.post('/webhook', function (req, res) {
                     break;
             }
             switch (userState[sender]) {
-                case 1:
-                    sendTextMessage("What message would you like to send?");
-                    userState[sender] = 1.1;
-                    break;
                 case 1.1:
                     var messageText = text;
                     sendTextMessage("To confirm, is this your message?");
@@ -47,10 +43,6 @@ app.post('/webhook', function (req, res) {
                 case 1.2:
                     sendTextMessage("Great, I'll send it now!");
                     userState[sender] = 0;
-                    break;
-                case 2:
-                    promptLocation(sender);
-                    userState[sender] = 2.1;
                     break;
                 case 2.1:
                     lat = event.message.attachments[0].payload.coordinates.lat;
@@ -73,10 +65,12 @@ app.post('/webhook', function (req, res) {
             console.log("postback");
             switch (JSON.stringify(event.postback.payload)) {
                 case "Send Message":
-                    userState[sender] = 1;
+                    sendTextMessage("What message would you like to send?");
+                    userState[sender] = 1.1;
                     break;
                 case "Change Location":
-                    userState[sender] = 2;
+                    promptLocation(sender);
+                    userState[sender] = 2.1;
                     break;
                 case "Yes 1.1":
                     userState[sender] = 1.2;
