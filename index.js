@@ -63,7 +63,7 @@ app.post('/webhook', function (req, res) {
             }
         } else if (event.postback) {
             payload = JSON.stringify(event.postback.payload);
-            console.log(payload);
+            payload = payload.trim();
             switch (payload) {
                 case "Send Message":
                     console.log("payload");
@@ -80,6 +80,7 @@ app.post('/webhook', function (req, res) {
                 case "No 1.1":
                     sendTextMessage(sender, "Whoops, let's try again!");
                     userState[sender] = 1;
+                    break;
             }
         }
     }
