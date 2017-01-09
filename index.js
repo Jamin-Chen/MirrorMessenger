@@ -31,13 +31,13 @@ app.post('/webhook', function (req, res) {
             let text = event.message.text;
             switch (text) {
                 case "reset":
-                    userState[Sender] = 0;
+                    userState[sender] = 0;
                     break;
             }
-            switch (userState[Sender]) {
+            switch (userState[sender]) {
                 case 1:
                     sendTextMessage("What message would you like to send?");
-                    userState[Sender] = 1.1;
+                    userState[sender] = 1.1;
                     break;
                 case 1.1:
                     var messageText = text;
@@ -68,17 +68,17 @@ app.post('/webhook', function (req, res) {
         } else if (event.postback) {
             switch (JSON.stringify(event.postback.payload)) {
                 case "Send Message":
-                    userState[Sender] = 1;
+                    userState[sender] = 1;
                     break;
                 case "Change Location":
-                    userState[Sender] = 2;
+                    userState[sender] = 2;
                     break;
                 case "Yes 1.1":
-                    userState[Sender] = 1.2;
+                    userState[sender] = 1.2;
                     break;
                 case "No 1.1":
                     sendTextMessage("Whoops, let's try again!");
-                    userState[Sender] = 1;
+                    userState[sender] = 1;
             }
         }
     }
