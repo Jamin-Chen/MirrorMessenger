@@ -43,8 +43,8 @@ app.post('/webhook', function (req, res) {
                 case 2.1:
                     lat = event.message.attachments[0].payload.coordinates.lat;
                     lng = event.message.attachments[0].payload.coordinates.long;
-                    console.log("latitude: " + lat);
-                    console.log("longitude: " + long);
+                    console.log(lat);
+                    console.log(long);
                     if (lat && long) {
                         sendTextMessage(sender, "Great, I'll change it now!");
                     }
