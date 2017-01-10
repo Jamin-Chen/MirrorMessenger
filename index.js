@@ -35,7 +35,7 @@ app.post('/webhook', function (req, res) {
                     break;
             }
             if (typeof(userState[sender]) === 'undefined') {
-                sendTextMessage(sender, "Hello, nice to meet you!";
+                sendTextMessage(sender, "Hello, nice to meet you!");
                 sendDefaultMessage(sender);
             }
             switch (userState[sender]) {
