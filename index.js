@@ -27,7 +27,7 @@ app.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         let event = events[i];
         let sender = event.sender.id;
-        if (event.message && event.message.text) {
+        if (event.message) {
             let text = event.message.text;
             switch (text) {
                 case "reset":
