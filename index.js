@@ -34,6 +34,10 @@ app.post('/webhook', function (req, res) {
                     userState[sender] = 0;
                     break;
             }
+            if (typeof(userState[sender]) === 'undefined') {
+                sendTextMessage(sender, "Hello, nice to meet you!";
+                sendDefaultMessage(sender);
+            }
             switch (userState[sender]) {
                 case 1.1:
                     var messageText = text;
@@ -44,8 +48,8 @@ app.post('/webhook', function (req, res) {
                     sendDefaultMessage(sender);
                     break;
                 default:
-                    sendTextMessage(sender, "Hello, nice to meet you! :)");
-                    sendDefaultMessage(sender);
+                    sendTextMessage(sender, "Whoops, I didn't quite understand that. Let me reset myself real quick!");
+                    userState[sender] = 0;
             }
         } else if (event.message && event.message.attachments[0].payload.coordinates) {
             console.log("location receieved");
