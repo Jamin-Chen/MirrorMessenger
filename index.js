@@ -27,7 +27,7 @@ app.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         let event = events[i];
         let sender = event.sender.id;
-        if (event.message) {
+        if (event.message && event.message.text) {
             let text = event.message.text;
             switch (text) {
                 case "reset":
@@ -40,6 +40,16 @@ app.post('/webhook', function (req, res) {
                     sendTextMessage(sender, "To confirm, is this your message?");
                     sendTextConfirm(sender, messageText);
                     break;
+                case 0:
+                    sendDefaultMessage(sender);
+                    break;
+                default:
+                    sendTextMessage(sender, "Hello, nice to meet you! :)");
+                    sendDefaultMessage(sender);
+            }
+        } else if (event.message && event.message.attachments[0].payload.coordinates) {
+            console.log("location receieved");
+            switch (userState[sender]) {
                 case 2.1:
                     console.log("here" + event.message.text);
                     lat = event.message.attachments.payload.coordinates.lat;
@@ -51,12 +61,6 @@ app.post('/webhook', function (req, res) {
                     }
                     userState[sender] = 0;
                     break;
-                case 0:
-                    sendDefaultMessage(sender);
-                    break;
-                default:
-                    sendTextMessage(sender, "Hello, nice to meet you! :)");
-                    sendDefaultMessage(sender);
             }
         } else if (event.postback) {
             payload = JSON.stringify(event.postback.payload);
