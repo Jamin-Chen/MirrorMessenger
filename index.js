@@ -3,17 +3,19 @@ var express = require('express'),
     request = require('request');
 var app = express();
 
-var userState = {};
+var userState = {}; // stores the user state for each user by ID
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 3000));
 
 app.get('/', function (request, response) {
+    // boot boot
     response.send('This is the Raspberry Pi Messenger Bot.');
 });
 
 app.get('/webhook', function (request, response) {
+    // verification function
     if (request.query['hub.verify_token'] === 'testbot_verify_token') {
         response.send(request.query['hub.challenge']);
     } else {
@@ -28,6 +30,7 @@ app.post('/webhook', function (req, res) {
         let event = events[i];
         let sender = event.sender.id;
         if (event.message && event.message.text) {
+            // handle TEXT messages
             let text = event.message.text;
             switch (text) {
                 case "reset":
@@ -52,10 +55,10 @@ app.post('/webhook', function (req, res) {
                     userState[sender] = 0;
             }
         } else if (event.message && event.message.attachments[0].payload.coordinates) {
+            // handle LOCATION messages
             console.log("location receieved");
             switch (userState[sender]) {
                 case 2.1:
-                    console.log("here");
                     lat = event.message.attachments[0].payload.coordinates.lat;
                     lng = event.message.attachments[0].payload.coordinates.long;
                     console.log(lat);
@@ -88,6 +91,9 @@ app.post('/webhook', function (req, res) {
                     sendTextMessage(sender, "Whoops, let's try again! What message would you like to send?");
                     userState[sender] = 1.1;
                     break;
+                default:
+                    sendTextMessage(sender, "Unidentified payload. Whoops! Resetting...");
+                    userState[sender] = 0;
             }
         }
     }
@@ -118,6 +124,7 @@ function sendTextMessage(recipientId, text) {
 };
 
 function sendDefaultMessage(recipientId) {
+    // Send the welcome message
     sendMessage(recipientId, {
         "attachment":{
               "type":"template",
@@ -142,6 +149,8 @@ function sendDefaultMessage(recipientId) {
 };
 
 function sendTextConfirm(recipientId, messageText) {
+    // Send structured confirm message with "Yes" and "No" options to allow
+    // user to confirm that the proper message is being sent.
     sendMessage(recipientId, {
         "attachment":{
               "type":"template",
