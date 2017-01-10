@@ -51,9 +51,9 @@ app.post('/webhook', function (req, res) {
             console.log("location receieved");
             switch (userState[sender]) {
                 case 2.1:
-                    console.log("here" + event.message.text);
-                    lat = event.message.attachments.payload.coordinates.lat;
-                    lng = event.message.attachments.payload.coordinates.long;
+                    console.log("here");
+                    lat = event.message.attachments[0].payload.coordinates.lat;
+                    lng = event.message.attachments[0].payload.coordinates.long;
                     console.log(lat);
                     console.log(long);
                     if (lat && long) {
